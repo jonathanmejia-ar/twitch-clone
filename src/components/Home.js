@@ -12,5 +12,6 @@ const Home = () => {
 export default Home;
 
 const Container = styled.main`
-
+    position: relative;
+    top:50px;
 `;
