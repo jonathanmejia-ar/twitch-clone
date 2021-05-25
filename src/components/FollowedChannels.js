@@ -2,6 +2,7 @@ import React from 'react'
 import styled from 'styled-components';
 import { BiArrowFromRight } from 'react-icons/bi';
 
+const followers = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 
 const FollowedChannels = () => {
     return (
@@ -13,17 +14,44 @@ const FollowedChannels = () => {
                         <BiArrowFromRight />
                     </IconButton>
                 </Header>
+                <Channels>
+                    {
+                        followers.map(channel => {
+                            return (
+                                <Channel>
+                                    <Avatar>
+                                        <img src="/images/channel.png" />
+                                    </Avatar>
+                                    <ChannelInfo>
+                                        <ChannelName>
+                                            Jonathan
+                                        </ChannelName>
+                                        <Category>
+                                            Grand Theft Auto 5
+                                        </Category>
+                                    </ChannelInfo>
+                                    <ViewersInfo>
+                                        <Status />
+                                        <Viewers>
+                                            112.999
+                                        </Viewers>
+                                    </ViewersInfo>
+                                </Channel>
+                            )
+                        })
+                    }
+                </Channels>
             </Container>
         </LeftSideBar>
     )
-}
+};
 
 export default FollowedChannels;
 
 const LeftSideBar = styled.aside`
     height: calc(100vh - 50px);
     position: relative;
-    top: 13px;
+    top: 3px;
     left: 0;
     z-index: 0;
     width: 240px;
@@ -35,12 +63,11 @@ const LeftSideBar = styled.aside`
 const Container = styled.div`
     width: 100%;
     height: 100%;
-    padding: 10px;
-
 `;
 
 const Header = styled.div`
-    margin: 10px;
+    margin-top: 10px;
+    padding: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -74,4 +101,82 @@ const IconButton = styled.button`
         color: #a970ff;
         background-color: #464648;
     }
+`;
+
+const Channels = styled.div`
+    width: 100%;
+`;
+
+const Channel = styled.div`
+    width: 100%;
+    padding: 5px 10px;
+    position: relative;
+    height: 42px;
+    display: flex;
+    align-items: center;
+
+    &:hover{
+        cursor: pointer;
+        background-color: #303036;
+    }
+`;
+
+const Avatar = styled.div`
+   width: 30px;
+   height: 100%;
+
+    img{
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+    }
+`;
+
+const ChannelInfo = styled.div`
+    width: 100%;
+    height: 100%;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    
+`;
+
+const ChannelName = styled.p`
+    font-size: 14px;
+    font-weight: bold;
+`;
+
+const Category = styled.p`
+    width: 100%;
+    font-size: 13px;
+    font-weight: 400;
+    color: #adadb8;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+`;
+
+const ViewersInfo = styled.div`
+    position: relative;
+    padding: 0 5px;
+    display: flex;
+    align-items: center;
+    margin-left: 5px;
+    justify-items: flex-end;
+`;
+
+const Status = styled.div`
+    width: 10px;
+    height: 10px;
+    background-color: red;
+    border-radius: 50%;
+    border: 1px solid #18181b;
+    margin-right: 4px;
+`;
+
+const Viewers = styled.div`
+    font-size: 13px;
 `;
