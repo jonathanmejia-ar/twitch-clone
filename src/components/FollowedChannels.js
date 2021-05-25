@@ -1,17 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components';
-import { BiArrowFromRight } from 'react-icons/bi';
+import { BiArrowFromRight, BiHeart } from 'react-icons/bi';
 
 const followers = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
 const FollowedChannels = () => {
+    const [collapseFollowers, setCollapseFollowers] = useState(false);
+
     return (
-        <LeftSideBar>
+        <LeftSideBar show={collapseFollowers}>
             <Container>
-                <Header>
-                    <h5>Canales que sigo</h5>
-                    <IconButton>
-                        <BiArrowFromRight />
+                <Header show={collapseFollowers}>
+                    {collapseFollowers ? (<h5>Canales que sigo</h5>) : (<BiHeart />)}
+                    <IconButton onClick={() => setCollapseFollowers(!collapseFollowers)}>
+                        <BiArrowFromRight style={{ transform: collapseFollowers ? 'rotate(0deg)' : 'rotate(180deg)' }} />
                     </IconButton>
                 </Header>
                 <Channels>
@@ -22,7 +24,7 @@ const FollowedChannels = () => {
                                     <Avatar>
                                         <img src="/images/channel.png" alt="avatar" />
                                     </Avatar>
-                                    <ChannelInfo>
+                                    <ChannelInfo show={collapseFollowers}>
                                         <ChannelName>
                                             Jonathan
                                         </ChannelName>
@@ -30,7 +32,7 @@ const FollowedChannels = () => {
                                             Grand Theft Auto 5
                                         </Category>
                                     </ChannelInfo>
-                                    <ViewersInfo>
+                                    <ViewersInfo show={collapseFollowers}>
                                         <Status />
                                         <Viewers>
                                             112.999
@@ -55,9 +57,12 @@ const LeftSideBar = styled.aside`
     left: 0;
     z-index: 0;
     width: 240px;
+    width: ${({ show }) => show ? '240px' : '50px'};
+    transition: width 0.2s;
     background-color: #1f1f23;
     color: white;
     display: block;
+    
 `;
 
 const Container = styled.div`
@@ -70,7 +75,9 @@ const Header = styled.div`
     padding: 10px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: ${({ show }) => show ? 'space-between' : 'center'};
+    flex-wrap: ${({ show }) => show ? 'nowrap' : 'wrap-reverse'};  
+    height: ${({ show }) => show ? '' : '80px'};
 
     h5{
         font-size: 13px;
@@ -84,7 +91,7 @@ const IconButton = styled.button`
     position: relative;
     z-index: 2;
     background-color: transparent;
-    color: white;
+    color: white !important;
     text-decoration: none;
     border: none;
     font-size: 22px;
@@ -136,7 +143,7 @@ const ChannelInfo = styled.div`
     width: 100%;
     height: 100%;
     margin-left: 10px;
-    display: flex;
+    display: ${({ show }) => show ? 'flex' : 'none'};
     flex-direction: column;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -166,6 +173,7 @@ const ViewersInfo = styled.div`
     align-items: center;
     margin-left: 5px;
     justify-items: flex-end;
+    display: ${({ show }) => show ? 'flex' : 'none'};
 `;
 
 const Status = styled.div`
