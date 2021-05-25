@@ -12,6 +12,9 @@ const Home = () => {
 export default Home;
 
 const Container = styled.main`
+    width: 100%;
     position: relative;
     top:50px;
+    left: 240px;
+    display: block;
 `;
