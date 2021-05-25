@@ -147,7 +147,7 @@ const IconButton = styled.button`
     position: relative;
     z-index: 2;
     background-color: transparent;
-    color: white;
+    color: white !important;
     text-decoration: none;
     border: none;
     font-size: 18px;

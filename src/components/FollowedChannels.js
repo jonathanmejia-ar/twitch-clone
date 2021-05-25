@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components';
 import { BiArrowFromRight } from 'react-icons/bi';
 
-const followers = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+const followers = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
 const FollowedChannels = () => {
     return (
@@ -16,11 +16,11 @@ const FollowedChannels = () => {
                 </Header>
                 <Channels>
                     {
-                        followers.map(channel => {
+                        followers.map((channel, index) => {
                             return (
-                                <Channel>
+                                <Channel key={index}>
                                     <Avatar>
-                                        <img src="/images/channel.png" />
+                                        <img src="/images/channel.png" alt="avatar" />
                                     </Avatar>
                                     <ChannelInfo>
                                         <ChannelName>
@@ -49,7 +49,7 @@ const FollowedChannels = () => {
 export default FollowedChannels;
 
 const LeftSideBar = styled.aside`
-    height: calc(100vh - 50px);
+    height: calc(100vh - 67px);
     position: relative;
     top: 3px;
     left: 0;
