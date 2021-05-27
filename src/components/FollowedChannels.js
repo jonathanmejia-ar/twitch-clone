@@ -51,6 +51,9 @@ const FollowedChannels = () => {
                         Mostrar menos
                     </a>
                 </ShowMore>
+                <AddFriends show={collapseFollowers}>
+                    <input placeholder="Añadir amigos" />
+                </AddFriends>
             </Container>
         </LeftSideBar>
     )
@@ -205,9 +208,30 @@ const ShowMore = styled.div`
         font-size: 12px;
         color: #a970ff;
     }
-    
+
     a:hover{
         text-decoration: underline;
         cursor: pointer;
+    }
+`;
+
+const AddFriends = styled.div`
+    width: 100%;
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+    display: ${({ show }) => show ? 'block' : 'none'};
+    border-top: 1px solid #2f2f32;
+
+    input{
+        width: 100%;
+        height: 30px;
+        padding: 5px 10px 5px 10px;
+        border-radius: 4px;
+        background-color: #464648;
+        appearance: none;
+        outline: none;
+        border: 0;
+        color: white;
     }
 `;
