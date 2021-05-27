@@ -1,82 +1,30 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
-import Axios from 'axios';
-
-const client_id = 'r499v1l1y5cplu5fh2w08zqfg8kxc8';
-const secret = '0ixbuzbhr00ltlne2rkkbphlwygeom';
+import { getTwitchToken, getTopGames, getGameViewers } from '../services/twitch';
 
 const Home = () => {
     const [games, setGames] = useState([]);
 
-    const provideSize = (url) => {
-        return url.replace('{width}x{height}', '285x380');
-    };
-
     useEffect(() => {
-        //getGames();
-        getToken()
-            .then(token => {
-                fetchTopGames(token)
-                    .then(games => {
-                        getGameViewers(games, token)
-                            .then(gamesWithViews => {
-                                setGames(gamesWithViews);
-                            })
-                    })
-            })
+        getGames();
     }, []);
 
+    //fetch games from twitch API
     const getGames = async () => {
-        let token = await getToken();
-        let topGames = await fetchTopGames(token);
-        let topGamesViews = await getGameViewers(topGames, token);
-        setGames(topGamesViews);
-    }
-
-    /*
-        Using Promise.all(items.map(async (item) => asyncFunc(item)) looks pretty, but if you have thousands of items, 
-        it can eat a lot of your browser's resources managing all those promises. If resource consumption is a concern, 
-        there is nothing wrong with for (const item of items) { await asyncFunc(item) }.
-    */
-
-    const getGameViewers = (topGames, token) => {
-        return Promise.all(topGames.map(async game => {
-            game['viewers'] = await fetchStreams(game.id, token);
-            return game;
-        }));
+        try {
+            let token = await getTwitchToken();
+            let topGames = await getTopGames(token);
+            setGames(topGames);
+            let topGamesViews = await getGameViewers(topGames, token);
+            setGames(topGamesViews);
+        } catch (err) {
+            console.log('Error: ' + err.message);
+        }
     };
 
-    const fetchTopGames = (token) => {
-        return Axios.get(`https://api.twitch.tv/helix/games/top`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                'Client-Id': client_id
-            }
-        }).then(response => {
-            return response.data.data;
-        });
-    };
-
-    const getToken = () => {
-        return Axios.post(`https://id.twitch.tv/oauth2/token?client_id=${client_id}&client_secret=${secret}&grant_type=client_credentials`)
-            .then(response => {
-                return response.data.access_token
-            });
-    };
-
-    const fetchStreams = (gameId, token) => {
-        return Axios.get(`https://api.twitch.tv/helix/streams?first=100&game_id=${gameId}`, {
-            headers: {
-                Authorization: `Bearer ${token}`,
-                'Client-Id': client_id
-            }
-        }).then(response => {
-            let totalViews = 0;
-            response.data.data.forEach(stream => {
-                totalViews += stream.viewer_count;
-            })
-            return totalViews;
-        });
+    //Replace supplied width and height with custom dimensions.
+    const provideSize = (boxArtUrl) => {
+        return boxArtUrl.replace('{width}x{height}', '285x380');
     };
 
     return (
@@ -126,7 +74,7 @@ const Home = () => {
                                         <Viewers>
                                             <a>
                                                 <p>
-                                                    {`${game.viewers} espectadores`}
+                                                    {`${game.viewers ? game.viewers : '...'} espectadores`}
                                                 </p>
                                             </a>
                                         </Viewers>
@@ -158,8 +106,7 @@ const Container = styled.main`
     overflow-x: hidden;
 `;
 
-const Content = styled.div`
-    
+const Content = styled.div`  
     //width: 95%;
     min-height: 80vh;
     margin-left: 25px;
@@ -179,7 +126,6 @@ const Title = styled.div`
 const Directory = styled.div`
     margin: 20px 0;
     display: flex;
-    
 `;
 
 const DirectoryBtn = styled.button`
@@ -210,10 +156,10 @@ const Functions = styled.div`
 const Filter = styled.div`
     display: flex;
     align-items: center;
+    
     label{
         width: 100px;
     }
-    
 `;
 
 const Search = styled.div`
@@ -257,7 +203,9 @@ const GameContent = styled.div`
     margin: 0 10px 0 0px;
     //background-color: blue;
     margin-bottom: 30px;
-    
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    //overflow: hidden;
 `;
 
 const BoxArt = styled.div`
@@ -279,24 +227,25 @@ const BoxArt = styled.div`
 
 const GameInfo = styled.div`
     color: white;
-    
 `;
 
 const Name = styled.div`
+    width: 100%;
     margin-top: 5px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
+
     a{
         h3{
             font-size: 14px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
         }
     }
+
     a:hover{
         color:#a970ff;
         cursor: pointer;
     }
-
 `;
 
 const Viewers = styled.div`
