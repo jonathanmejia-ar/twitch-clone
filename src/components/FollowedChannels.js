@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components';
 import { BiArrowFromRight, BiHeart } from 'react-icons/bi';
 
-const followers = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+const followers = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
 const FollowedChannels = () => {
     const [collapseFollowers, setCollapseFollowers] = useState(true);
@@ -43,6 +43,14 @@ const FollowedChannels = () => {
                         })
                     }
                 </Channels>
+                <ShowMore show={collapseFollowers}>
+                    <a>
+                        Mostrar más
+                    </a>
+                    <a>
+                        Mostrar menos
+                    </a>
+                </ShowMore>
             </Container>
         </LeftSideBar>
     )
@@ -186,4 +194,20 @@ const Status = styled.div`
 
 const Viewers = styled.div`
     font-size: 13px;
+`;
+
+const ShowMore = styled.div`
+    padding: 10px;
+    display: ${({ show }) => show ? 'flex' : 'none'};
+    justify-content: space-between;
+
+    a{
+        font-size: 12px;
+        color: #a970ff;
+    }
+    
+    a:hover{
+        text-decoration: underline;
+        cursor: pointer;
+    }
 `;
