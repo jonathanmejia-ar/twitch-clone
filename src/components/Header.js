@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components';
-import { BiComment, BiCrown, BiDiamond } from 'react-icons/bi';
+import { BiComment, BiCrown, BiDiamond, BiDotsHorizontalRounded } from 'react-icons/bi';
 import { RiInboxLine } from "react-icons/ri";
 
 const Header = () => {
@@ -36,7 +36,7 @@ const Header = () => {
                 </Wraper>
                 <BtnWrapper>
                     <IconButton>
-                        ...
+                        <BiDotsHorizontalRounded />
                     </IconButton>
                 </BtnWrapper>
             </NavMenu>
