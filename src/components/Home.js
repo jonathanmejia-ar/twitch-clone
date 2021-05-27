@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
 import { getTwitchToken, getTopGames, getGameViewers } from '../services/twitch';
 
-const Home = () => {
+const Home = ({ collapseFollowers }) => {
     const [games, setGames] = useState([]);
 
     useEffect(() => {
@@ -29,7 +29,7 @@ const Home = () => {
 
     return (
         <Container>
-            <Content>
+            <Content show={collapseFollowers}>
                 <Title>
                     <h1>Explorar</h1>
                 </Title>
@@ -97,11 +97,11 @@ const Home = () => {
 export default Home;
 
 const Container = styled.main`
-    width: calc(100vw - 240px);
+    width: calc(100vw - 50px);
     height: calc(100vh - 50px);
     position: relative;
-    top:50px;
-    left: 240px;
+    top: 50px;
+    left: 50px;
     background-color: #0e0e10;
     overflow-x: hidden;
 `;
@@ -109,9 +109,9 @@ const Container = styled.main`
 const Content = styled.div`  
     //width: 95%;
     min-height: 80vh;
-    margin-left: 25px;
+    margin-left: ${({ show }) => show ? '215px' : '25px'};
+    transition: margin-left 0.2s;
     margin-right: 25px;
-    //background-color: gray;
 `;
 
 const Title = styled.div`

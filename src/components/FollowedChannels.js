@@ -4,8 +4,7 @@ import { BiArrowFromRight, BiHeart } from 'react-icons/bi';
 
 const followers = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
-const FollowedChannels = () => {
-    const [collapseFollowers, setCollapseFollowers] = useState(true);
+const FollowedChannels = ({ collapseFollowers, setCollapseFollowers }) => {
 
     return (
         <LeftSideBar show={collapseFollowers}>
@@ -66,7 +65,7 @@ const LeftSideBar = styled.aside`
     position: fixed;
     top: 50px;
     left: 0;
-    z-index: 0;
+    z-index: 1;
     width: ${({ show }) => show ? '240px' : '50px'};
     transition: width 0.2s;
     background-color: #1f1f23;
