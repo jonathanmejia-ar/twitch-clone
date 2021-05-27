@@ -5,7 +5,7 @@ import { BiArrowFromRight, BiHeart } from 'react-icons/bi';
 const followers = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
 const FollowedChannels = () => {
-    const [collapseFollowers, setCollapseFollowers] = useState(false);
+    const [collapseFollowers, setCollapseFollowers] = useState(true);
 
     return (
         <LeftSideBar show={collapseFollowers}>
@@ -51,12 +51,11 @@ const FollowedChannels = () => {
 export default FollowedChannels;
 
 const LeftSideBar = styled.aside`
-    height: calc(100vh - 67px);
-    position: relative;
-    top: 3px;
+    height: calc(100vh - 50px);
+    position: fixed;
+    top: 50px;
     left: 0;
     z-index: 0;
-    width: 240px;
     width: ${({ show }) => show ? '240px' : '50px'};
     transition: width 0.2s;
     background-color: #1f1f23;
@@ -71,7 +70,7 @@ const Container = styled.div`
 `;
 
 const Header = styled.div`
-    margin-top: 10px;
+    //margin-top: 10px;
     padding: 10px;
     display: flex;
     align-items: center;
