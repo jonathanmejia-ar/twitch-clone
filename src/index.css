@@ -7,3 +7,8 @@
 body {
   font-family: Inter, Roobert, Helvetica Neue, Helvetica, Arial, sans-serif;
 }
+
+a {
+  text-decoration: none;
+  color: white;
+}

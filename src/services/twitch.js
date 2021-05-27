@@ -3,6 +3,7 @@ import Axios from 'axios';
 const client_id = 'r499v1l1y5cplu5fh2w08zqfg8kxc8';
 const secret = '0ixbuzbhr00ltlne2rkkbphlwygeom';
 
+
 export const getGameViewers = async (topGames, token) => {
     return Promise.all(topGames.map(async game => {
         game['viewers'] = await getStreams(game.id, token);
@@ -42,3 +43,15 @@ export const getStreams = (gameId, token) => {
         return totalViews;
     });
 };
+
+export const getFollowedStreams = (token) => {
+    return Axios.get(`https://api.twitch.tv/helix/streams/followed?first=13&user_id=skillah`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+            'Client-Id': client_id
+        }
+    }).then(response => {
+        console.log(response);
+        //return response
+    })
+}

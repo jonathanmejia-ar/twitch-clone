@@ -12,12 +12,12 @@ const Header = () => {
                     <img src="/images/twitch.svg" alt="twitch-logo" />
                 </Logo>
                 <Wraper>
-                    <a>
+                    <a href="# ">
                         <p>Siguiendo</p>
                     </a>
                 </Wraper>
                 <Wraper>
-                    <a>
+                    <a href="# ">
                         Explorar
                     </a>
                 </Wraper>
@@ -25,12 +25,12 @@ const Header = () => {
 
                 </Divider>
                 <Wraper>
-                    <a>
+                    <a href="# ">
                         Esports
                     </a>
                 </Wraper>
                 <Wraper>
-                    <a>
+                    <a href="# ">
                         Música
                     </a>
                 </Wraper>

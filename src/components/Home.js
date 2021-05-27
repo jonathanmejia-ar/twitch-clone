@@ -65,14 +65,14 @@ const Home = ({ collapseFollowers }) => {
                                     </BoxArt>
                                     <GameInfo>
                                         <Name>
-                                            <a>
+                                            <a href="# ">
                                                 <h3>
                                                     {game.name}
                                                 </h3>
                                             </a>
                                         </Name>
                                         <Viewers>
-                                            <a>
+                                            <a href="# ">
                                                 <p>
                                                     {`${game.viewers ? game.viewers : '...'} espectadores`}
                                                 </p>

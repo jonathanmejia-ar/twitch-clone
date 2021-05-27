@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import styled from 'styled-components';
 import { BiArrowFromRight, BiHeart } from 'react-icons/bi';
 
@@ -43,10 +43,10 @@ const FollowedChannels = ({ collapseFollowers, setCollapseFollowers }) => {
                     }
                 </Channels>
                 <ShowMore show={collapseFollowers}>
-                    <a>
+                    <a href="# ">
                         Mostrar más
                     </a>
-                    <a>
+                    <a href="# ">
                         Mostrar menos
                     </a>
                 </ShowMore>
