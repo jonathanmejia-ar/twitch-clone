@@ -168,7 +168,7 @@ const Content = styled.div`
 `;
 
 const Title = styled.div`
-    margin-top: 25px;
+    margin-top: 30px;
 
     h1{
         font-size: 54px;
