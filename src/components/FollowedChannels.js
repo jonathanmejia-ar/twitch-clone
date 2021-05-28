@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { BiArrowFromRight, BiHeart } from 'react-icons/bi';
+import { FiUsers } from "react-icons/fi";
 
 const followers = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
@@ -53,6 +54,9 @@ const FollowedChannels = ({ collapseFollowers, setCollapseFollowers }) => {
                 <AddFriends show={collapseFollowers}>
                     <input placeholder="Añadir amigos" />
                 </AddFriends>
+                <FriendsOnline show={collapseFollowers}>
+                    <FiUsers />
+                </FriendsOnline>
             </Container>
         </LeftSideBar>
     )
@@ -157,7 +161,6 @@ const ChannelInfo = styled.div`
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    
 `;
 
 const ChannelName = styled.p`
@@ -233,4 +236,16 @@ const AddFriends = styled.div`
         border: 0;
         color: white;
     }
+`;
+
+const FriendsOnline = styled.div`
+    width: 100%;
+    padding: 10px;
+    position: absolute;
+    bottom: 0;
+    display: ${({ show }) => show ? 'none' : 'flex'};
+    justify-content: center;
+    border-top: 1px solid #2f2f32;
+    align-items: center;
+    font-size: 20px;
 `;
