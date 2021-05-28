@@ -1,35 +1,69 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components';
-import { getTwitchToken, getTopGames, getGameViewers } from '../services/twitch';
+import * as twitchService from '../services/twitch';
+import useInfiniteScroll from 'react-infinite-scroll-hook';
+import { Fade } from "react-awesome-reveal";
 
 const Home = ({ collapseFollowers }) => {
     const [games, setGames] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [page, setPage] = useState('');
 
     useEffect(() => {
-        getGames();
+        if (sessionStorage.getItem('twitchToken')) {
+            getGames();
+        } else {
+            getToken()
+                .then(() => {
+                    getGames();
+                });
+        };
+        return () => sessionStorage.removeItem('twitchToken');
     }, []);
 
-    //fetch games from twitch API
-    const getGames = async () => {
+    //get Twitch token from Twitch API
+    const getToken = async () => {
         try {
-            let token = await getTwitchToken();
-            let topGames = await getTopGames(token);
-            setGames(topGames);
-            let topGamesViews = await getGameViewers(topGames, token);
-            setGames(topGamesViews);
+            let token = await twitchService.getTwitchAppToken();
+            sessionStorage.setItem('twitchToken', token);
+            return;
         } catch (err) {
-            console.log('Error: ' + err.message);
+            console.log('Error getting token: ' + err.message);
         }
     };
 
-    //Replace supplied width and height with custom dimensions.
+    //Fetch games from Twitch API
+    const getGames = async () => {
+        try {
+            let twitchToken = sessionStorage.getItem('twitchToken');
+
+            // If games are empty, fetch first TopGames if not use page to start fetching the next set of results
+            let topGames = !games ? await twitchService.getTopGames(twitchToken, 20) : await twitchService.getMoreTopGames(twitchToken, page, 20);
+            setGames(games.concat(topGames.data));
+            setPage(topGames.pagination.cursor);
+            let topGamesViews = await twitchService.getGameViewers(games.concat(topGames.data), twitchToken);
+            setGames(topGamesViews);
+        } catch (err) {
+            console.log('Error fetch games: ' + err.message);
+        }
+    };
+
+    //Infinite scroll to fetch more games
+    const [infiniteRef, { rootRef }] = useInfiniteScroll({
+        loading,
+        hasNextPage: true,
+        onLoadMore: getGames,
+        scrollContainer: 'parent',
+    });
+
+    //Replace static width and height with custom dimensions.
     const provideSize = (boxArtUrl) => {
         return boxArtUrl.replace('{width}x{height}', '285x380');
     };
 
     return (
-        <Container>
-            <Content show={collapseFollowers}>
+        <Container ref={rootRef}>
+            <Content show={collapseFollowers} >
                 <Title>
                     <h1>Explorar</h1>
                 </Title>
@@ -55,35 +89,38 @@ const Home = ({ collapseFollowers }) => {
                         </Search>
                     </Sort>
                 </Functions>
-                <TopGames>
+                <TopGames >
+
                     {
-                        games && games.map(game => {
+                        games && games.map((game, index) => {
                             return (
-                                <GameContent key={game.id}>
-                                    <BoxArt>
-                                        <img src={provideSize(game.box_art_url)} alt="" />
-                                    </BoxArt>
-                                    <GameInfo>
-                                        <Name>
-                                            <a href="# ">
-                                                <h3>
-                                                    {game.name}
-                                                </h3>
-                                            </a>
-                                        </Name>
-                                        <Viewers>
-                                            <a href="# ">
-                                                <p>
-                                                    {`${game.viewers ? game.viewers : '...'} espectadores`}
-                                                </p>
-                                            </a>
-                                        </Viewers>
-                                        <Tags>
-                                            <button>
-                                                Shooter
+                                <GameContent key={index} ref={infiniteRef}>
+                                    <Fade>
+                                        <BoxArt>
+                                            <img src={provideSize(game.box_art_url)} alt="" />
+                                        </BoxArt>
+                                        <GameInfo>
+                                            <Name>
+                                                <a href="# ">
+                                                    <h3>
+                                                        {game.name}
+                                                    </h3>
+                                                </a>
+                                            </Name>
+                                            <Viewers>
+                                                <a href="# ">
+                                                    <p>
+                                                        {`${game.viewers ? game.viewers : '...'} espectadores`}
+                                                    </p>
+                                                </a>
+                                            </Viewers>
+                                            <Tags>
+                                                <button>
+                                                    Shooter
                                             </button>
-                                        </Tags>
-                                    </GameInfo>
+                                            </Tags>
+                                        </GameInfo>
+                                    </Fade>
                                 </GameContent>
                             )
                         })
@@ -111,7 +148,7 @@ const Content = styled.div`
     min-height: 80vh;
     margin-left: ${({ show }) => show ? '215px' : '25px'};
     transition: margin-left 0.2s;
-    margin-right: 25px;
+    margin-right: 15px;
 `;
 
 const Title = styled.div`
@@ -145,14 +182,8 @@ const DirectoryBtn = styled.button`
     }
 `;
 
-const Functions = styled.div`
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    font-size: 13px;
-    font-weight: bold;
-`;
 
+//Filter & Sort components
 const Filter = styled.div`
     display: flex;
     align-items: center;
@@ -161,6 +192,34 @@ const Filter = styled.div`
         width: 100px;
     }
 `;
+
+const Sort = styled(Filter)`
+        padding-right: 10px;
+    
+        label{
+            width: 120px;
+        }
+`;
+
+const Functions = styled.div`
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: bold;
+
+    @media (max-width: 768px){
+        flex-direction: column;
+
+        ${Filter}{
+            margin-bottom: 10px;
+        }
+
+        ${Sort}{
+        }
+    }
+`;
+
 
 const Search = styled.div`
     //padding: 2px;
@@ -183,29 +242,25 @@ const Search = styled.div`
     }
 `;
 
-const Sort = styled(Filter)`
-    label{
-        width: 120px;
-    }
-`;
 
+// Top Games Components
 const TopGames = styled.div`
     margin-top: 20px;
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 20px;
+    justify-content: center;
 `;
 
 const GameContent = styled.div`
-    //position: relative;
-    width: 200px;
+    width : 180px ;
+    max-width: 220px;
     height: 325px;
     margin: 0 10px 0 0px;
-    //background-color: blue;
     margin-bottom: 30px;
     text-overflow: ellipsis;
     white-space: nowrap;
-    //overflow: hidden;
+    flex-grow: 1;
 `;
 
 const BoxArt = styled.div`
