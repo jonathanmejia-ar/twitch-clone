@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components';
-import { BiComment, BiCrown, BiDiamond, BiDotsHorizontalRounded } from 'react-icons/bi';
+import { BiComment, BiCrown, BiDiamond, BiDotsHorizontalRounded, BiHeart, BiTrophy, BiMusic, BiSearch } from 'react-icons/bi';
 import { RiInboxLine } from "react-icons/ri";
+import { MdContentCopy } from "react-icons/md";
 
 const Header = () => {
 
@@ -11,39 +12,77 @@ const Header = () => {
                 <Logo>
                     <img src="/images/twitch.svg" alt="twitch-logo" />
                 </Logo>
-                <Wraper>
+                <Wrapper>
                     <a href="# ">
                         <p>Siguiendo</p>
                     </a>
-                </Wraper>
-                <Wraper>
+                </Wrapper>
+                <Wrapper>
                     <a href="# ">
                         Explorar
                     </a>
-                </Wraper>
+                </Wrapper>
                 <Divider>
 
                 </Divider>
-                <Wraper>
+                <Wrapper>
                     <a href="# ">
                         Esports
                     </a>
-                </Wraper>
-                <Wraper>
+                </Wrapper>
+                <Wrapper>
                     <a href="# ">
                         Música
                     </a>
-                </Wraper>
+                </Wrapper>
                 <BtnWrapper>
                     <IconButton>
                         <BiDotsHorizontalRounded />
                     </IconButton>
                 </BtnWrapper>
             </NavMenu>
+            <NavIconMenu>
+                <Logo>
+                    <img src="/images/twitch.svg" alt="twitch-logo" />
+                </Logo>
+                <BtnWrapper>
+                    <IconButton>
+                        <BiHeart />
+                    </IconButton>
+                </BtnWrapper>
+                <BtnWrapper>
+                    <IconButton>
+                        <MdContentCopy />
+                    </IconButton>
+                </BtnWrapper>
+                <Divider>
+
+                </Divider>
+                <BtnWrapper>
+                    <IconButton>
+                        <BiTrophy />
+                    </IconButton>
+                </BtnWrapper>
+                <BtnWrapper>
+                    <IconButton>
+                        <BiMusic />
+                    </IconButton>
+                </BtnWrapper>
+                <BtnWrapper>
+                    <IconButton>
+                        <BiDotsHorizontalRounded />
+                    </IconButton>
+                </BtnWrapper>
+            </NavIconMenu>
             <Search>
                 <input placeholder="Buscar" />
             </Search>
             <UserMenu>
+                <BtnWrapper>
+                    <IconButton>
+                        <BiSearch />
+                    </IconButton>
+                </BtnWrapper>
                 <BtnWrapper>
                     <IconButton>
                         <BiCrown />
@@ -114,9 +153,14 @@ const NavMenu = styled.div`
     flex-wrap: nowrap;
     align-items: center;
     margin-right: auto;
+
+    @media (max-width: 770px){
+        display: none;
+    }
 `;
 
-const Wraper = styled.div`
+
+const Wrapper = styled.div`
     padding: 0 20px;
     
     a{     
@@ -168,7 +212,32 @@ const IconButton = styled.button`
 
 const BtnWrapper = styled.div`
     padding: 0 5px;
+`;
 
+const NavIconMenu = styled.div`
+    display: none;
+
+    ${BtnWrapper}{
+        padding: 0 10px;
+    }
+
+    ${IconButton}{
+        font-size: 20px;
+    }
+
+    ${IconButton}:hover{
+        color: #a970ff !important;
+        background-color: transparent;
+    }
+
+    @media (max-width: 770px){
+        height: 100%;
+        width: 100%;
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        margin-right: auto;
+    }
 `;
 
 
@@ -195,6 +264,10 @@ const Search = styled.div`
         border: 0;
         color: white;
     }
+
+    @media (max-width: 770px){
+        display: none;
+    }
 `;
 
 const UserMenu = styled.div`
@@ -202,6 +275,12 @@ const UserMenu = styled.div`
     display: flex;
     justify-content: flex-end;
     flex-wrap: nowrap;
+
+    ${BtnWrapper}:nth-child(1){
+        @media (min-width:770px){
+            display: none;
+        }
+    }
 `;
 
 const Avatar = styled.div`
