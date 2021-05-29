@@ -189,7 +189,7 @@ const DirectoryBtn = styled.button`
     &.active{
         color:#a970ff;
         cursor: pointer;
-        border-bottom: 3px solid #a970ff;
+        border-bottom: 2px solid #a970ff;
     }
 `;
 
@@ -201,7 +201,11 @@ const Filter = styled.div`
 `;
 
 const LabelContainer = styled.div`
-    min-width: 90px;
+    padding-right: 10px;
+    
+    label{
+        white-space: nowrap;
+    } 
 `;
 
 const Sort = styled(Filter)`
