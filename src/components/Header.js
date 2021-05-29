@@ -17,7 +17,7 @@ const Header = () => {
                         <p>Siguiendo</p>
                     </a>
                 </Wrapper>
-                <Wrapper>
+                <Wrapper className="active">
                     <a href="# ">
                         Explorar
                     </a>
@@ -45,12 +45,12 @@ const Header = () => {
                 <Logo>
                     <img src="/images/twitch.svg" alt="twitch-logo" />
                 </Logo>
-                <BtnWrapper>
+                <BtnWrapper >
                     <IconButton>
                         <BiHeart />
                     </IconButton>
                 </BtnWrapper>
-                <BtnWrapper>
+                <BtnWrapper className="active">
                     <IconButton>
                         <MdContentCopy />
                     </IconButton>
@@ -156,6 +156,8 @@ const NavMenu = styled.div`
     align-items: center;
     margin-right: auto;
 
+    
+
     @media (max-width: 770px){
         display: none;
     }
@@ -163,6 +165,9 @@ const NavMenu = styled.div`
 
 const Wrapper = styled.div`
     padding: 0 20px;
+    height: 100%;
+    display: flex;
+    align-items: center;
     
     a{     
         font-size: 17px;
@@ -171,6 +176,17 @@ const Wrapper = styled.div`
     a:hover {
         cursor: pointer;
         color: #a970ff;
+    }
+
+    &.active{
+        a{
+            height: 100%;
+            display: flex;
+            align-items: center;
+            color:#a970ff;
+            cursor: pointer;
+            border-bottom: 2px solid #a970ff;
+        }
     }
 
     @media (max-width: 1440px){
@@ -212,7 +228,23 @@ const IconButton = styled.button`
 `;
 
 const BtnWrapper = styled.div`
+    height: 100%;
+    display: flex;
+    align-items: center;
     padding: 0 5px;
+
+    &.active{
+            height: 100%;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            border-bottom: 2px solid #a970ff;
+
+        ${IconButton}{
+            color: #a970ff !important;
+        }
+        
+    }
 `;
 
 const NavIconMenu = styled.div`
