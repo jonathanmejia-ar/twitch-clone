@@ -317,6 +317,7 @@ const Button = styled.button`
 `;
 
 const Icon = styled.div`
+    font-size: 15px;
     margin-right: 5px;
     line-height: 10px;
 `;
