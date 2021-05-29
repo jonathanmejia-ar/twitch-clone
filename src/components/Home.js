@@ -182,7 +182,11 @@ const DirectoryBtn = styled.button`
     font-weight: 600;
     appearance: none;
     
-    &.active,&:hover{
+    :hover{
+        color:#a970ff;
+        cursor: pointer;
+    }
+    &.active{
         color:#a970ff;
         cursor: pointer;
         border-bottom: 3px solid #a970ff;
