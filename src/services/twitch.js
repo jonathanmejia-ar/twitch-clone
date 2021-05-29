@@ -16,32 +16,21 @@ const twitchAuthHeaders = (token) => ({
 });
 
 //Add collected viewers to all games.
-export const getGameViewers = async (topGames, token) => {
+export const getGameViewers = async (topGames, token, limit) => {
     return Promise.all(topGames.map(async game => {
-        game['viewers'] = await getStreams(game.id, token);
+        game['viewers'] = await getStreams(game.id, token, limit);
         return game;
     }));
 };
 
-export const getTopGames = (token, limit = 20) => {
-    return Axios.get(`https://api.twitch.tv/helix/games/top?first=${limit}`, twitchAuthHeaders(token))
-        .then(response => {
-            return response.data;
-        });
-};
-
-export const getMoreTopGames = (token, page, limit = 20) => {
+export const getTopGames = (token, limit = 20, page = '') => {
     return Axios.get(`https://api.twitch.tv/helix/games/top?first=${limit}&after=${page}`, twitchAuthHeaders(token))
-        .then(response => {
-            return response.data;
-        });
+        .then(response => response.data);
 };
 
 export const getTwitchAppToken = () => {
     return Axios.post(`https://id.twitch.tv/oauth2/token?client_id=${client_id}&client_secret=${secret}&grant_type=client_credentials`)
-        .then(response => {
-            return response.data.access_token
-        });
+        .then(response => response.data.access_token);
 };
 
 export const getTwitchUserToken = () => {
@@ -52,8 +41,8 @@ export const getTwitchUserToken = () => {
 };
 
 //Get the 50 best streams of a specific game and collect all viewers.
-export const getStreams = (gameId, token) => {
-    return Axios.get(`https://api.twitch.tv/helix/streams?first=50&game_id=${gameId}`, twitchAuthHeaders(token))
+export const getStreams = (gameId, token, limit) => {
+    return Axios.get(`https://api.twitch.tv/helix/streams?first=${limit}&game_id=${gameId}`, twitchAuthHeaders(token))
         .then(response => {
             let totalViews = 0;
             response.data.data.forEach(stream => {
@@ -65,7 +54,5 @@ export const getStreams = (gameId, token) => {
 
 export const getFollowedStreams = (token) => {
     return Axios.get(`https://api.twitch.tv/helix/streams/followed?user_id=${user_id}`, twitchAuthHeaders(token))
-        .then(response => {
-            return response.data;
-        })
+        .then(response => response.data);
 };

@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import * as twitchService from '../services/twitch';
 import useInfiniteScroll from 'react-infinite-scroll-hook';
 import { Fade } from "react-awesome-reveal";
-import { RiArrowDownSLine } from "react-icons/ri";
-
 import { MdKeyboardArrowDown } from "react-icons/md";
 
 const Home = ({ collapseFollowers }) => {
@@ -41,10 +39,10 @@ const Home = ({ collapseFollowers }) => {
             let twitchToken = sessionStorage.getItem('twitchToken');
 
             // If games are empty, fetch first TopGames if not use page to start fetching the next set of results
-            let topGames = !games ? await twitchService.getTopGames(twitchToken, 24) : await twitchService.getMoreTopGames(twitchToken, page, 24);
+            let topGames = !games ? await twitchService.getTopGames(twitchToken, 24) : await twitchService.getTopGames(twitchToken, 24, page);
             setGames(games.concat(topGames.data));
             setPage(topGames.pagination.cursor);
-            let topGamesViews = await twitchService.getGameViewers(games.concat(topGames.data), twitchToken);
+            let topGamesViews = await twitchService.getGameViewers(games.concat(topGames.data), twitchToken, 100);
             setGames(topGamesViews);
         } catch (err) {
             console.log('Error fetch games: ' + err.message);
@@ -100,7 +98,6 @@ const Home = ({ collapseFollowers }) => {
                     </Sort>
                 </Functionalties>
                 <TopGames >
-
                     {
                         games && games.map((game, index) => {
                             return (
