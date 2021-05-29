@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { BiArrowFromRight, BiHeart } from 'react-icons/bi';
 import { FiUsers } from "react-icons/fi";
 
-const followers = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
+const followed = new Array(10).fill(7);
 
 const FollowedChannels = ({ collapseFollowers, setCollapseFollowers }) => {
 
@@ -18,7 +18,7 @@ const FollowedChannels = ({ collapseFollowers, setCollapseFollowers }) => {
                 </Header>
                 <Channels>
                     {
-                        followers.map((channel, index) => {
+                        followed.map((channel, index) => {
                             return (
                                 <Channel key={index}>
                                     <Avatar>
