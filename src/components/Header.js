@@ -146,6 +146,8 @@ const Logo = styled.div`
     }
 `;
 
+
+//Navigation menu
 const NavMenu = styled.div`
     height: 100%;
     width: 100%;
@@ -158,7 +160,6 @@ const NavMenu = styled.div`
         display: none;
     }
 `;
-
 
 const Wrapper = styled.div`
     padding: 0 20px;
@@ -240,12 +241,13 @@ const NavIconMenu = styled.div`
     }
 `;
 
-
+//Divider
 const Divider = styled.div`
     border-left: 1px solid #2f2f32;
     height: 65%;
 `;
 
+//Search Components
 const Search = styled.div`
     padding: 7px;
     width: 100%;
@@ -269,6 +271,9 @@ const Search = styled.div`
         display: none;
     }
 `;
+
+
+//User menu components
 
 const UserMenu = styled.div`
     width: 100%;
