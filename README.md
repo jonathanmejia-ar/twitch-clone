@@ -2,9 +2,9 @@
 
 Twitch Directory UI Clone Spanish Version build with React, Styled Components, Twitch API and Infinite Scroll.
 
-## Deploy
+## Live Demo
 
-Link
+- [Twitch Clone](https://twitch-directory-clone.vercel.app)
 
 ## Screenshot
 
