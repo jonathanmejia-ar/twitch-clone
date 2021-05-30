@@ -1,6 +1,6 @@
 # Twitch Directory Clone
 
-Twitch Directory UI Clone build with React, Styled Components, Twitch API and Infinite Scroll.
+Twitch Directory UI Clone Spanish Version build with React, Styled Components, Twitch API and Infinite Scroll.
 
 ## Deploy
 
