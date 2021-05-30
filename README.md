@@ -4,7 +4,12 @@ Twitch Directory UI Clone build with React, Styled Components, Twitch API and In
 
 ## Screenshots
 
+#### Desktop
+
 ![twitch1](twitch1.png)
+
+#### Laptop
+
 ![twitch2](twitch2.png)
 
 ## Usage
