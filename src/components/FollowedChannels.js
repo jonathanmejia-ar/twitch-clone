@@ -26,7 +26,7 @@ const FollowedChannels = ({ collapseFollowers, setCollapseFollowers }) => {
                                     </Avatar>
                                     <ChannelInfo show={collapseFollowers}>
                                         <ChannelName>
-                                            Jonathan
+                                            TwitchUser
                                         </ChannelName>
                                         <Category>
                                             Grand Theft Auto 5
