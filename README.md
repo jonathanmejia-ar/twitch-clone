@@ -2,15 +2,15 @@
 
 Twitch Directory UI Clone build with React, Styled Components, Twitch API and Infinite Scroll.
 
-## Screenshots
+## Deploy
 
-#### Desktop
+Link
 
-![twitch1](twitch1.png)
+## Screenshot
 
-#### Laptop
+#### Desktop & Laptop
 
-![twitch2](twitch2.png)
+![twitch](twitch.png)
 
 ## Usage
 
