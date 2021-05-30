@@ -76,7 +76,7 @@ const Home = ({ collapseFollowers }) => {
                         Canales en directo
                     </DirectoryBtn>
                 </Directory>
-                <Functionalties show={collapseFollowers}>
+                <Actions show={collapseFollowers}>
                     <Filter>
                         <LabelContainer>
                             <label>Filtrar por</label>
@@ -96,7 +96,7 @@ const Home = ({ collapseFollowers }) => {
                             </Icon>
                         </button>
                     </Sort>
-                </Functionalties>
+                </Actions>
                 <TopGames >
                     {
                         games && games.map((game, index) => {
@@ -236,7 +236,7 @@ const Sort = styled(Filter)`
     }
 `;
 
-const Functionalties = styled.div`
+const Actions = styled.div`
     color: white;
     display: flex;
     justify-content: space-between;
