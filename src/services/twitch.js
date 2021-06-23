@@ -1,11 +1,12 @@
 import Axios from 'axios';
 
 /**
- * Please use your client_id and secret
+ * Use your client_id and secret
  */
-const client_id = 'r499v1l1y5cplu5fh2w08zqfg8kxc8';
-const secret = '0ixbuzbhr00ltlne2rkkbphlwygeom';
-const user_id = '125609133';
+
+const client_id = process.env.REACT_APP_TWITCH_CLIENT_ID;
+const secret = process.env.REACT_APP_TWITCH_SECRET;
+const user_id = process.env.REACT_APP_TWITCH_USER_ID;
 
 //Twitch required headers.
 const twitchAuthHeaders = (token) => ({
